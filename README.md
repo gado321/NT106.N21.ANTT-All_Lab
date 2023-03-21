@@ -1,4 +1,4 @@
-# NT106.N21.ANTT-All_Lab
+# NT106.N21.ANTT - All Labs
 Inlcude 6 labs of NT106.N21.ANTT class
 
 Made by: </br>
