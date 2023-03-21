@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Lab01
 {
@@ -18,7 +20,21 @@ namespace Lab01
             InitializeComponent();
         }
 
+        public static bool IsBinary(string text)
+        {
+            return Regex.IsMatch(text, "^[01]+$");
+        }
+
+        public static bool IsOctal(string text)
+        {
+            return Regex.IsMatch(text, "^[0-7]+$");
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -28,67 +44,143 @@ namespace Lab01
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int result;
+            string messageInput = "Vui lòng nhập số đúng định dạng!";
+            string messageSelected = "Vui lòng chọn kiểu dữ liệu cần chuyển!";
+            // Check value of list is selected or not
+            if (comboBox1.SelectedItem == null || comboBox2.SelectedItem == null)
+            {
+                MessageBox.Show(messageSelected);
+            }
+            else
+            {
+                string typeFrom = comboBox1.SelectedItem.ToString();
+                string typeTo = comboBox2.SelectedItem.ToString();
+
+                //Check input is valid Binary number or not
+                bool isBin = IsBinary(textBox1.Text);
+                //Check input is valid Octal number or not
+                bool isOct = IsOctal(textBox1.Text);
+                //Check input is valid Decimal number or not
+                bool isDec = int.TryParse(textBox1.Text, out result);
+                //Check input is valid Hex number or not (base 0x)
+                bool isHex = textBox1.Text.Length > 2 &&
+                textBox1.Text.Substring(0, 2).ToLowerInvariant() == "0x" &&
+                int.TryParse(textBox1.Text.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out result);
+
+                //Convert any base to base 2
+                if (isBin && typeFrom == "Binary")
+                {
+                    if (typeTo == "Binary")
+                    {
+                        textBox2.Text = textBox1.Text;
+                    }
+                    else if (typeTo == "Octal")
+                    {
+                        textBox2.Text = Convert.ToString(Convert.ToInt32(textBox1.Text, 2), 8);
+                    }
+                    else if (typeTo == "Decimal")
+                    {
+                        textBox2.Text = Convert.ToInt32(textBox1.Text, 2).ToString();
+                    }
+                    else if (typeTo == "Hexadecimal")
+                    {
+                        textBox2.Text = Convert.ToInt32(textBox1.Text, 2).ToString("X");
+                    }
+                }
+                //Convert any base to base 8
+                else if (isOct && typeFrom == "Octal")
+                {
+
+                    if (typeTo == "Binary")
+                    {
+                        textBox2.Text = Convert.ToString(Convert.ToInt32(textBox1.Text, 8), 2);
+                    }
+                    else if (typeTo == "Octal")
+                    {
+                        textBox2.Text = textBox1.Text;
+                    }
+                    else if (typeTo == "Decimal")
+                    {
+                        textBox2.Text = Convert.ToInt32(textBox1.Text, 8).ToString();
+                    }
+                    else if (typeTo == "Hexadecimal")
+                    {
+                        textBox2.Text = Convert.ToInt32(textBox1.Text, 8).ToString("X");
+                    }
+                }
+                //Convert any base to base 10
+                else if (isDec && typeFrom == "Decimal")
+                {
+                    if (typeTo == "Binary")
+                    {
+                        textBox2.Text = Convert.ToString(result, 2);
+                    }
+                    else if (typeTo == "Octal")
+                    {
+                        textBox2.Text = Convert.ToString(result, 8);
+                    }
+                    else if (typeTo == "Decimal")
+                    {
+                        textBox2.Text = textBox1.Text;
+                    }
+                    else if (typeTo == "Hexadecimal")
+                    {
+                        textBox2.Text = result.ToString("X");
+                    }
+                }
+                //Convert any base to base 16
+                else if (isHex && typeFrom == "Hexadecimal")
+                {
+                    if (typeTo == "Binary")
+                    {
+                        textBox2.Text = Convert.ToString(Convert.ToInt32(textBox1.Text, 16), 2);
+                    }
+                    else if (typeTo == "Octal")
+                    {
+                        textBox2.Text = Convert.ToString(Convert.ToInt32(textBox1.Text, 16), 8);
+                    }
+                    else if (typeTo == "Decimal")
+                    {
+                        textBox2.Text = Convert.ToInt32(textBox1.Text, 16).ToString();
+                    }
+                    else if (typeTo == "Hexadecimal")
+                    {
+                        textBox2.Text = textBox1.Text;
+                    }
+                }
+                //Wrong input format
+                else
+                {
+                    MessageBox.Show(messageInput);
+                }
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string[] raw_numbers = textBox1.Text.Trim().Split(new string[] { ", " }, StringSplitOptions.None);
-            double[] numbers = new double[100];
-            double tmp, sum = 0;
-            int cnt = 0, dauCnt = 0;
-            bool tryparse, checkLT65 = false, checkLT5 = false, checkLT35 = false, checkLT2 = false;
-            string data = "";
-
-            foreach (string raw_number in raw_numbers)
-            {
-                data += "Môn ";
-                data += (cnt + 1).ToString() + ": ";
-                data += raw_number + "đ           ";
-                tryparse = Double.TryParse(raw_number, out tmp);
-                if (!tryparse)
-                {
-                    MessageBox.Show("Đã nhập sai format!");
-                    return;
-                }
-                if (tmp >= 5) dauCnt++;
-                if (tmp < 6.5) checkLT65 = true;
-                if (tmp < 5) checkLT5 = true;
-                if (tmp < 3.5) checkLT35 = true;
-                if (tmp < 2) checkLT2 = true;
-                sum += tmp;
-                numbers[cnt] = tmp;
-                cnt++;
-            }
-
-            MessageBox.Show("Đã nhập đúng format!");
-
-            string hocLuc;
-
-            if ((sum / cnt) >= 8 && !checkLT65) hocLuc = "Giỏi";
-            else if ((sum / cnt) >= 6.5 && !checkLT5) hocLuc = "Khá";
-            else if ((sum / cnt) >= 5 && !checkLT35) hocLuc = "TB";
-            else if ((sum / cnt) >= 3.5 && !checkLT2) hocLuc = "Yếu";
-            else hocLuc = "Kém";
-
-            Array.Sort(numbers, 0, cnt);
-            label8.Text = data;
-            labelDiemTB.Text = Math.Round((sum / cnt), 2).ToString();
-            labelDiemCN.Text = numbers[cnt - 1].ToString() + " đ";
-            labelDiemTN.Text = numbers[0].ToString() + " đ";
-            labelSMD.Text = dauCnt.ToString();
-            labelSMKD.Text = (cnt - dauCnt).ToString();
-            labelHocLuc.Text = hocLuc;
+            this.Close();
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        private void Form5_Load(object sender, EventArgs e)
         {
 
         }

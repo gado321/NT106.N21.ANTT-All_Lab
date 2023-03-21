@@ -100,5 +100,10 @@ namespace Lab01
         {
             this.Close();
         }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

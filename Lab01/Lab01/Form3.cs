@@ -39,8 +39,8 @@ namespace Lab01
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            bool success = float.TryParse(textBox1.Text, out float val);
-            string message = "Vui lòng nhập số nguyên!";
+            bool success = float.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float val);
+            string message = "Vui lòng nhập số hợp lệ!";
             if (!success && textBox1.Text != "" && textBox1.Text != "-")
             {
                 MessageBox.Show(message);
@@ -49,8 +49,8 @@ namespace Lab01
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            bool success = float.TryParse(textBox2.Text, out float val);
-            string message = "Vui lòng nhập số nguyên!";
+            bool success = float.TryParse(textBox2.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float val);
+            string message = "Vui lòng nhập số hợp lệ!";
             if (!success && textBox2.Text != "" && textBox2.Text != "-")
             {
                 MessageBox.Show(message);
@@ -59,8 +59,8 @@ namespace Lab01
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            bool success = float.TryParse(textBox3.Text, out float val);
-            string message = "Vui lòng nhập số nguyên!";
+            bool success = float.TryParse(textBox3.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float val);
+            string message = "Vui lòng nhập số hợp lệ!";
             if (!success && textBox3.Text != "" && textBox3.Text != "-")
             {
                 MessageBox.Show(message);
@@ -69,9 +69,10 @@ namespace Lab01
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string message = "Vui lòng nhập số nguyên!";
+            string message = "Vui lòng nhập số hợp lệ!";
             float num1, num2, num3;
-            if (!float.TryParse(textBox1.Text, out num1) || !float.TryParse(textBox2.Text, out num2) || !float.TryParse(textBox3.Text, out num3))
+            
+            if (!float.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out num1) || !float.TryParse(textBox2.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out num2) || !float.TryParse(textBox3.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out num3))
             {
                 MessageBox.Show(message);
             }
