@@ -43,5 +43,10 @@ namespace Lab01
             execise4Form.Show();
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var execise5Form = new Form6();
+            execise5Form.Show();
+        }
     }
 }
