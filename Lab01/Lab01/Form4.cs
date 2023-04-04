@@ -33,6 +33,58 @@ namespace Lab01
             }
         }
 
+        string[] VNNum = { "", "Một", "Hai", "Ba", "Bốn", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười" };
+        private string NumTrans(int number)
+        {
+
+            if (number < 10)
+                return VNNum[number];
+            else if (number == 15)
+                return "Mười Lăm";
+            else if (number >= 10 && number < 20)
+                return "Mười " + VNNum[number % 10];
+            else
+            {
+                string text = "";
+
+                if ((number / 1000000000) > 0)
+                {
+                    text += NumTrans(number / 1000000000) + " Tỷ ";
+                    number %= 1000000000;
+                }
+
+                if ((number / 1000000) > 0)
+                {
+                    text += NumTrans(number / 1000000) + " Triệu ";
+                    number %= 1000000;
+                }
+
+                if ((number / 1000) > 0)
+                {
+                    text += NumTrans(number / 1000) + " Nghìn ";
+                    number %= 1000;
+                }
+
+                if ((number / 100) > 0)
+                {
+                    text += NumTrans(number / 100) + " Trăm ";
+                    number %= 100;
+                }
+
+                if (number > 9 && number < 100 && number % 10 == 0 && number != 10)
+                {
+                    text += NumTrans(number / 10) + " Mươi ";
+                }
+                else if (number > 19 && number < 100 && number % 10 != 0 && number % 5 != 0)
+                    text += NumTrans(number / 10) + " Mươi " + NumTrans(number % 10);
+                else if (number > 19 && number % 10 != 0 && number % 5 == 0)
+                    text += NumTrans(number / 10) + " Mươi " + "Lăm";
+                else
+                    text += NumTrans(number);
+                return text;
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             string message = "Vui lòng nhập số nguyên hợp lệ!";
@@ -42,50 +94,14 @@ namespace Lab01
                 MessageBox.Show(message);
             }
             else
-            {
-                if (num1 == 0)
+            {  
+                if (num1 < 0)
                 {
-                    textBox5.Text = "Không";
-                }
-                else if (num1 == 1)
-                {
-                    textBox5.Text = "Một";
-                }
-                else if (num1 == 2)
-                {
-                    textBox5.Text = "Hai";
-                }
-                else if (num1 == 3)
-                {
-                    textBox5.Text = "Ba";
-                }
-                else if (num1 == 4)
-                {
-                    textBox5.Text = "Bốn";
-                }
-                else if (num1 == 5)
-                {
-                    textBox5.Text = "Năm";
-                }
-                else if (num1 == 6)
-                {
-                    textBox5.Text = "Sáu";
-                }
-                else if (num1 == 7)
-                {
-                    textBox5.Text = "Bảy";
-                }   
-                else if (num1 == 8)
-                {
-                    textBox5.Text = "Tám";
-                }
-                else if (num1 == 9)
-                {
-                    textBox5.Text = "Chín";
+                    textBox5.Text = "Âm " + NumTrans(num1 * (-1));
                 }
                 else
                 {
-                    MessageBox.Show(message);
+                    textBox5.Text = NumTrans(num1);
                 }
             }
         }
@@ -102,6 +118,11 @@ namespace Lab01
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form4_Load(object sender, EventArgs e)
         {
 
         }

@@ -52,9 +52,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label1.Location = new System.Drawing.Point(101, 132);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(388, 31);
+            this.label1.Size = new System.Drawing.Size(342, 31);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Nhập vào số nguyên từ 0 đến 9";
+            this.label1.Text = "Nhập vào số nguyên bất kỳ";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button3
@@ -121,6 +121,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form4";
             this.Text = "Bài 3";
+            this.Load += new System.EventHandler(this.Form4_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
