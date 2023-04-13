@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -35,36 +36,36 @@ namespace Lab02
                 this.DienThoai = DienThoai;
                 this.DiemToan = DiemToan;
                 this.DiemVan = DiemVan;
-                this.DTB = 0;
             }
         }
 
+        List<Student> students = new List<Student>();
         private void button1_Click(object sender, EventArgs e)
+        {
+            students.Add(new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text), float.Parse(textBox5.Text)));
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input4.txt", FileMode.OpenOrCreate);
+            BinaryFormatter bf = new BinaryFormatter();
+
+            
+            bf.Serialize(fs, students);
+            fs.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
 
             FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate);
             BinaryFormatter bf = new BinaryFormatter();
-            
-            Student s = new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text), float.Parse(textBox5.Text));
-            bf.Serialize(fs, s);
+
+            Student s = (Student)bf.Deserialize(fs);
             fs.Close();
-
-            //try
-            //{
-                
-            //}
-            //catch (Exception exp)
-            //{
-            //    MessageBox.Show("Chọn file đi em");
-            //}
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -121,5 +122,6 @@ namespace Lab02
         {
 
         }
+
     }
 }
