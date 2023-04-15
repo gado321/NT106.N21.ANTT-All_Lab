@@ -23,12 +23,12 @@ namespace Lab02
         [Serializable]
         public class Student
         {
-            public string MSSV;
-            public string HoTen;
-            public string DienThoai;
-            public float DiemToan;
-            public float DiemVan;
-            public float DTB;
+            private string MSSV;
+            private string HoTen;
+            private string DienThoai;
+            private float DiemToan;
+            private float DiemVan;
+            private float DiemTB;
             public Student(string MSSV, string HoTen, string DienThoai, float DiemToan, float DiemVan)
             {
                 this.MSSV = MSSV;
@@ -36,36 +36,118 @@ namespace Lab02
                 this.DienThoai = DienThoai;
                 this.DiemToan = DiemToan;
                 this.DiemVan = DiemVan;
+                DiemTB = 0;
+            }
+
+            public string Show(bool check)
+            {
+                if (!check)
+                    return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan}\n{DiemVan}\n\n\n";
+                return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan}\n{DiemVan}\n{DiemTB}\n\n";
+            }
+
+            public void CalAvg()
+            {
+                DiemTB = (DiemToan + DiemVan) / 2;
             }
         }
 
         List<Student> students = new List<Student>();
+
         private void button1_Click(object sender, EventArgs e)
         {
-            students.Add(new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text), float.Parse(textBox5.Text)));
+            try
+            {
+                students.Add(new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text), float.Parse(textBox5.Text)));
+                richTextBox1.Text = "Added information's student:\n";
+                richTextBox1.Text += students[students.Count - 1].Show(false);
+            }
+            catch
+            {
+                MessageBox.Show("Chưa nhập đủ thông tin!");
+            }
+            
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+        }
 
+        private void button3_Click(object sender, EventArgs e)
+        {   
+            if (students.Count != 0)
+            {
+                FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input4.txt", FileMode.OpenOrCreate);
+                BinaryFormatter bf = new BinaryFormatter();
+
+                MessageBox.Show("Đã lưu thông tin các sinh viên vào file input.txt");
+                bf.Serialize(fs, students);
+                fs.Close();
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa nhập thông tin sinh viên!");
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input4.txt", FileMode.OpenOrCreate);
-            BinaryFormatter bf = new BinaryFormatter();
+            FileStream fsInput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input4.txt", FileMode.OpenOrCreate);
 
-            
-            bf.Serialize(fs, students);
+            FileStream fsOutput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output4.txt", FileMode.OpenOrCreate);
+            try
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                students.Clear();
+                students = (List<Student>)bf.Deserialize(fsInput);
+                richTextBox1.Clear();
+                students.ForEach(s => richTextBox1.Text += s.Show(false));
+
+                MessageBox.Show("Đã tính điểm trung bình cho các sinh viên và lưu thông tin vào file output.txt");
+                students.ForEach(s => s.CalAvg());
+                bf.Serialize(fsOutput, students);
+            }
+            catch
+            {
+                MessageBox.Show("Không có thông tin để tính");
+            }
+            fsInput.Close();
+            fsOutput.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output4.txt", FileMode.OpenOrCreate);
+            try
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+
+                students.Clear();
+                students = (List<Student>)bf.Deserialize(fs);
+                richTextBox1.Clear();
+                students.ForEach(s => richTextBox1.Text += s.Show(true));
+            }
+            catch
+            {
+                MessageBox.Show("Không có thông tin!");
+            }
             fs.Close();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.ShowDialog();
+            FileStream fsInput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input4.txt", FileMode.OpenOrCreate);
+            fsInput.SetLength(0);
+            fsInput.Close();
 
-            FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate);
-            BinaryFormatter bf = new BinaryFormatter();
+            FileStream fsOutput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output4.txt", FileMode.OpenOrCreate);
+            fsOutput.SetLength(0);
+            fsOutput.Close();
 
-            Student s = (Student)bf.Deserialize(fs);
-            fs.Close();
+            MessageBox.Show("Đã xoá dữ liệu thông tin sinh viên!");
         }
 
         private void label1_Click(object sender, EventArgs e)
