@@ -42,7 +42,7 @@ namespace Lab02
                 
                 // get URL of file
                 string url = fs.Name.ToString();
-                textBox2.Text= url;
+                textBox2.Text = url;
 
                 // Count number of line in a file
                 content = content.Replace("\r\n", "\r");
@@ -63,7 +63,7 @@ namespace Lab02
             }
             catch (Exception exp)
             {
-                MessageBox.Show("Chọn file đi em");
+                MessageBox.Show("Bạn chưa chọn file!");
             }
         }
 

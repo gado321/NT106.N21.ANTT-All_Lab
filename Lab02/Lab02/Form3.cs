@@ -18,17 +18,33 @@ namespace Lab02
             InitializeComponent();
         }
 
-        string ans;
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.ShowDialog();
-
             try
             {
-                FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate);
+                FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input3.txt", FileMode.OpenOrCreate);
                 StreamReader sr = new StreamReader(fs);
 
+                richTextBox1.Text = sr.ReadToEnd();
+
+                fs.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Có phép tính nhập vào không đúng!");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FileStream fsInput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\input3.txt", FileMode.OpenOrCreate);
+            FileStream fsOutput = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output3.txt", FileMode.OpenOrCreate);
+            try
+            {
+                StreamReader sr = new StreamReader(fsInput);
+                StreamWriter sw = new StreamWriter(fsOutput);
+                
+                richTextBox1.Clear();   
                 while (true)
                 {
                     string expression = sr.ReadLine();
@@ -36,57 +52,18 @@ namespace Lab02
                     {
                         break;
                     }
-                    string[] nums = expression.Split(new char[] { '+', '-', '*', '/', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    int operand1 = int.Parse(nums[0]);
-                    int operand2 = int.Parse(nums[1]);
-                    char op = expression[expression.IndexOfAny(new char[] { '+', '-', '*', '/' })];
-                    double result = 0;
-                    switch (op)
-                    {
-                        case '+':
-                            result = operand1 + operand2;
-                            break;
-                        case '-':
-                            result = operand1 - operand2;
-                            break;
-                        case '*':
-                            result = operand1 * operand2;
-                            break;
-                        case '/':
-                            result = (float)operand1 / operand2;
-                            break;
-                    }
-                    richTextBox1.Text += $"{operand1} {op}{operand2} = \n";
-                    ans += $"{operand1} {op}{operand2} = {result}\n";
+                    var result = new DataTable().Compute(expression, null);
+                    richTextBox1.Text += expression + "=" + result.ToString() + "\n";
                 }
-
-
-                fs.Close();
+                sw.Write(richTextBox1.Text);
             }
-            catch (Exception exp)
+            catch (Exception)
             {
-                MessageBox.Show("Chọn file đi em");
+                MessageBox.Show("Có phép tính nhập vào không đúng!");
             }
-        }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.ShowDialog();
-            try
-            {
-                FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs);
-
-                richTextBox1.Text = ans;
-                string newText = richTextBox1.Text;
-                sw.Write(newText);
-                sw.Close();
-            }
-            catch (Exception exp)
-            {
-                MessageBox.Show("Chọn file đi em");
-            }
+            fsInput.Close();
+            fsOutput.Close();
         }
     }
 }

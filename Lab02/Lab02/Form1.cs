@@ -30,9 +30,9 @@ namespace Lab02
                 richTextBox1.Text = content;
                 fs.Close();
             }
-            catch (Exception exp)
+            catch
             {
-                MessageBox.Show("Chọn file đi em");
+                MessageBox.Show("Hãy chọn file cần mở!");
             }
         }
 
@@ -43,19 +43,20 @@ namespace Lab02
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.ShowDialog();
-            try
+            if (richTextBox1.Text.Length != 0)
             {
-                FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
+                FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output.txt", FileMode.OpenOrCreate);
+
                 StreamWriter sw = new StreamWriter(fs);
-                string newText = richTextBox1.Text;
+                string newText = richTextBox1.Text.ToUpper();
                 sw.Write(newText);
-                sw.Close();
+                MessageBox.Show("Đã lưu thông tin vào file output.txt!");
+
+                fs.Close();
             }
-            catch (Exception exp)
+            else
             {
-                MessageBox.Show("Chọn file đi em");
+                MessageBox.Show("Không có nội dung để lưu!");
             }
         }
 

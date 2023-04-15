@@ -148,6 +148,7 @@ namespace Lab02
             fsOutput.Close();
 
             MessageBox.Show("Đã xoá dữ liệu thông tin sinh viên!");
+            richTextBox1.Clear();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -205,5 +206,9 @@ namespace Lab02
 
         }
 
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
