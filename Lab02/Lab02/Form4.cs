@@ -4,10 +4,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +21,7 @@ namespace Lab02
         public Form4()
         {
             InitializeComponent();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         }
 
         [Serializable]
@@ -42,8 +46,8 @@ namespace Lab02
             public string Show(bool check)
             {
                 if (!check)
-                    return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan}\n{DiemVan}\n\n\n";
-                return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan}\n{DiemVan}\n{DiemTB}\n\n";
+                    return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan.ToString(".0###########")}\n{DiemVan.ToString(".0###########")}\n\n\n";
+                return $"{MSSV}\n{HoTen}\n{DienThoai}\n{DiemToan.ToString(".0###########")}\n{DiemVan.ToString(".0###########")}\n{DiemTB.ToString(".0###########")}\n\n";
             }
 
             public void CalAvg()
@@ -58,20 +62,36 @@ namespace Lab02
         {
             try
             {
-                students.Add(new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text), float.Parse(textBox5.Text)));
+                if (
+                    // Check MSSV
+                    string.IsNullOrEmpty(textBox1.Text) || textBox1.TextLength != 8 || !Regex.IsMatch(textBox1.Text, "^[0-9]+$") ||
+                    // Check HoTen
+                    string.IsNullOrEmpty(textBox2.Text) || !Regex.IsMatch(textBox2.Text, "^[a-zA-Z]+$") ||
+                    // Check DienThoai
+                    string.IsNullOrEmpty(textBox3.Text) || textBox3.TextLength != 10 || !Regex.IsMatch(textBox3.Text, "^[0-9]+$") ||
+                    // Check DiemToan
+                    (float.Parse(textBox4.Text, CultureInfo.CurrentCulture) > 10 || float.Parse(textBox4.Text, CultureInfo.CurrentCulture) < 0)||
+                    // Check DiemVan
+                    (float.Parse(textBox5.Text, CultureInfo.CurrentCulture) > 10 || float.Parse(textBox5.Text, CultureInfo.CurrentCulture) < 0))
+                {
+                    throw new ArgumentException("Invalid input");
+                }
+
+                
+
+                students.Add(new Student(textBox1.Text, textBox2.Text, textBox3.Text, float.Parse(textBox4.Text, NumberStyles.Any, CultureInfo.CurrentCulture), float.Parse(textBox5.Text, NumberStyles.Any, CultureInfo.CurrentCulture)));
                 richTextBox1.Text = "Added information's student:\n";
                 richTextBox1.Text += students[students.Count - 1].Show(false);
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
             }
             catch
             {
-                MessageBox.Show("Chưa nhập đủ thông tin!");
+                MessageBox.Show("Thông tin vừa nhập chưa đúng!");
             }
-            
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -149,66 +169,6 @@ namespace Lab02
 
             MessageBox.Show("Đã xoá dữ liệu thông tin sinh viên!");
             richTextBox1.Clear();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form4_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }

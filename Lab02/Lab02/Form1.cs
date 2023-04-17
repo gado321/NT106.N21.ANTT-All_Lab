@@ -48,10 +48,11 @@ namespace Lab02
                 FileStream fs = new FileStream("D:\\Documents\\Learning materials\\HK4\\Lap trinh mang can ban\\NT106.N21.ANTT-All_Lab\\Lab02\\output.txt", FileMode.OpenOrCreate);
 
                 StreamWriter sw = new StreamWriter(fs);
-                string newText = richTextBox1.Text.ToUpper();
-                sw.Write(newText);
+                //string newText = richTextBox1.Text.ToUpper();
+                sw.Write(richTextBox1.Text.ToUpper());
                 MessageBox.Show("Đã lưu thông tin vào file output.txt!");
 
+                sw.Close();
                 fs.Close();
             }
             else

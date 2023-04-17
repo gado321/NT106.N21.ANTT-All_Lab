@@ -74,7 +74,7 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form3";
-            this.Text = "Form3";
+            this.Text = "Bài 3";
             this.ResumeLayout(false);
 
         }

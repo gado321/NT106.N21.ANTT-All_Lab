@@ -40,5 +40,11 @@ namespace Lab02
             var execise4Form = new Form4();
             execise4Form.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var execise5Form = new Form5();
+            execise5Form.Show();
+        }
     }
 }

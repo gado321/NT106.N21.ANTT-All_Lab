@@ -46,6 +46,7 @@ namespace Lab02
 
                 // Count number of line in a file
                 content = content.Replace("\r\n", "\r");
+                content = content.Replace("\n", "\r");
                 int lineCount = richTextBox1.Lines.Count();
                 textBox3.Text = lineCount.ToString();
 
