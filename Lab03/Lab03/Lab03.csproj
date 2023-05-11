@@ -70,6 +70,30 @@
     <Compile Include="Form1_ServerThread.Designer.cs">
       <DependentUpon>Form1_ServerThread.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.cs">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3_ClientThread.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3_ClientThread.Designer.cs">
+      <DependentUpon>Form3_ClientThread.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3_ServerThread.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3_ServerThread.Designer.cs">
+      <DependentUpon>Form3_ServerThread.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dashboard.resx">
@@ -83,6 +107,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1_ServerThread.resx">
       <DependentUpon>Form1_ServerThread.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3_ClientThread.resx">
+      <DependentUpon>Form3_ClientThread.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3_ServerThread.resx">
+      <DependentUpon>Form3_ServerThread.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

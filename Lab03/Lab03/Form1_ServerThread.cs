@@ -29,7 +29,7 @@ namespace Lab03
             try
             {
                 isListening = true;
-                Thread thdUDPServer = new Thread(new ThreadStart(serverThread));
+                Thread thdUDPServer = new Thread(new ThreadStart(ServerThread));
                 udpClient = new UdpClient(int.Parse(textBox2.Text));
                 thdUDPServer.IsBackground = true;
                 thdUDPServer.Start();
@@ -44,7 +44,7 @@ namespace Lab03
             }
         }
 
-        public void serverThread()
+        private void ServerThread()
         {
             //udpClient = new UdpClient(int.Parse(textBox2.Text));
             while (isListening)
@@ -83,6 +83,11 @@ namespace Lab03
             {
                 udpClient.Close();
             }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

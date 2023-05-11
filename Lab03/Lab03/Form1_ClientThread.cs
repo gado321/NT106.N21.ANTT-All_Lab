@@ -23,7 +23,7 @@ namespace Lab03
         {
             try
             {
-                UdpClient udpClient = new UdpClient();
+                UdpClient udpClient = new UdpClient();  
                 Byte[] sendBytes = Encoding.UTF8.GetBytes(richTextBox1.Text);
                 udpClient.Send(sendBytes, sendBytes.Length, textBox1.Text, int.Parse(textBox2.Text));
             }
@@ -34,6 +34,10 @@ namespace Lab03
             catch (FormatException)
             {
                 MessageBox.Show("Hãy nhập đúng địa chỉ Port!");
+            }
+            catch
+            {
+
             }
         }
     }
