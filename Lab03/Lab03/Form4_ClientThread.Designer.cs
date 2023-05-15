@@ -36,8 +36,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.yournameTxtBox = new System.Windows.Forms.TextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.btnInit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label3
@@ -57,7 +58,7 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(579, 39);
             this.richTextBox1.TabIndex = 12;
-            this.richTextBox1.Text = "";
+            this.richTextBox1.Text = "Xin chao";
             // 
             // button1
             // 
@@ -87,6 +88,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(231, 26);
             this.textBox1.TabIndex = 8;
+            this.textBox1.Text = "127.0.0.1";
             // 
             // label2
             // 
@@ -105,6 +107,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(209, 26);
             this.textBox2.TabIndex = 11;
+            this.textBox2.Text = "8080";
             // 
             // label4
             // 
@@ -117,12 +120,13 @@
             this.label4.Text = "Your name";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // textBox3
+            // yournameTxtBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(33, 460);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(181, 22);
-            this.textBox3.TabIndex = 14;
+            this.yournameTxtBox.Location = new System.Drawing.Point(33, 460);
+            this.yournameTxtBox.Name = "yournameTxtBox";
+            this.yournameTxtBox.Size = new System.Drawing.Size(181, 22);
+            this.yournameTxtBox.TabIndex = 14;
+            this.yournameTxtBox.Text = "Hieu";
             // 
             // richTextBox2
             // 
@@ -133,12 +137,23 @@
             this.richTextBox2.TabIndex = 12;
             this.richTextBox2.Text = "";
             // 
+            // btnInit
+            // 
+            this.btnInit.Location = new System.Drawing.Point(710, 22);
+            this.btnInit.Name = "btnInit";
+            this.btnInit.Size = new System.Drawing.Size(75, 23);
+            this.btnInit.TabIndex = 15;
+            this.btnInit.Text = "Init";
+            this.btnInit.UseVisualStyleBackColor = true;
+            this.btnInit.Click += new System.EventHandler(this.btnInit_Click);
+            // 
             // Form4_ClientThread
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 598);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.btnInit);
+            this.Controls.Add(this.yournameTxtBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox2);
@@ -148,7 +163,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form4_ClientThread";
             this.Text = "Form4_ClientThread";
             this.Load += new System.EventHandler(this.Form4_ClientThread_Load);
@@ -167,7 +182,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox yournameTxtBox;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Button btnInit;
     }
 }

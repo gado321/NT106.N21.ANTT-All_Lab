@@ -9,11 +9,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Lab03
 {
     public partial class Form4_ClientThread : Form
     {
+        private TcpClient tcpClient = new TcpClient();
+
         public Form4_ClientThread()
         {
             InitializeComponent();
@@ -23,15 +27,11 @@ namespace Lab03
         {   
             try
             {
-                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(textBox1.Text), int.Parse(textBox2.Text));
-                TcpClient tcpClient = new TcpClient();
-                tcpClient.Connect(ipep);
 
                 NetworkStream networkStream = tcpClient.GetStream();
-                Byte[] data = Encoding.ASCII.GetBytes(richTextBox1.Text);
+                Byte[] data = Encoding.ASCII.GetBytes(yournameTxtBox.Text + ": " + richTextBox1.Text);
                 networkStream.Write(data, 0, data.Length);
-                networkStream.Close();
-                tcpClient.Close();
+
             }
             catch (SocketException)
             {
@@ -41,11 +41,12 @@ namespace Lab03
             {
                 MessageBox.Show("Hãy nhập đúng địa chỉ IP!");
             }
-            catch
+            catch (Exception ex)
             {
-                
+                MessageBox.Show("Đã có lỗi xảy ra ở Client!");
+                MessageBox.Show(ex.Message);
             }
-            
+            MessageBox.Show("done");
         }
 
         private void Form4_ClientThread_Load(object sender, EventArgs e)
@@ -55,6 +56,53 @@ namespace Lab03
 
         private void label4_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void UpdateTextBox(string text)
+        {
+            // Check if the calling thread is the same as the thread that created the TextBox
+            if (richTextBox2.InvokeRequired)
+            {
+                // If not, use cross-thread invocation to call the UpdateTextBox method on the main UI thread
+                richTextBox2.Invoke((MethodInvoker)delegate {
+                    UpdateTextBox(text);
+                });
+            }
+            else
+            {
+                // If so, set the text of the TextBox directly
+                richTextBox2.Text += text;
+            }
+        }
+
+        private void ReceiveResponses(NetworkStream networkStream)
+        {
+            while (true)
+            {
+                if (networkStream.DataAvailable)
+                {
+                    Byte[] receivedBytes = new byte[1024];
+                    int dataSize = networkStream.Read(receivedBytes, 0, receivedBytes.Length);
+                    UpdateTextBox("\n" + Encoding.ASCII.GetString(receivedBytes, 0, dataSize).ToString());
+                }
+                else
+                {
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
+        private void btnInit_Click(object sender, EventArgs e)
+        {
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(textBox1.Text), int.Parse(textBox2.Text));
+
+            tcpClient.Connect(ipep);
+
+            NetworkStream networkStream = tcpClient.GetStream();
+
+            Thread responseThread = new Thread(() => ReceiveResponses(networkStream));
+            responseThread.Start();
 
         }
     }

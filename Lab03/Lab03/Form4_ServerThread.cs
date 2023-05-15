@@ -41,6 +41,9 @@ namespace Lab03
                 richTextBox1.Text = connectInfo;
             }
 
+            TcpClient[] Clients = new TcpClient[1000];
+            int n = 0;
+
             while (true)
             {
                 try
@@ -50,9 +53,25 @@ namespace Lab03
                     NetworkStream networkStream = TCPclient.GetStream();
                     Byte[] receivedBytes = new byte[1024];
                     int dataSize = networkStream.Read(receivedBytes, 0, receivedBytes.Length);
+                    MessageBox.Show("\n" + Encoding.ASCII.GetString(receivedBytes).ToString());
                     if (dataSize == 0)
                     {
                         break;
+                    }
+                    
+                    Clients[n] = TCPclient;
+                    n++;
+
+                    // Broadcast to clients
+                    for (int i = 0; i < n; i++)
+                    {
+                        NetworkStream client_i_netstream = Clients[i].GetStream();
+                        if (client_i_netstream.CanRead && client_i_netstream.CanWrite)
+                        {
+                            client_i_netstream.Write(receivedBytes, 0, receivedBytes.Length);
+                            //client_i_netstream.Close();
+                        }
+
                     }
 
                     // why TCPclient.Client.RemoteEndPoint.ToString() is not use port 8080?
@@ -66,11 +85,15 @@ namespace Lab03
                     {
                         richTextBox1.Text += message;
                     }
-                    TCPclient.Close();
-                }
-                catch
-                {
+                    //networkStream.Close();
+                    //TCPclient.Close();
 
+                    
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Đã có lỗi xảy ra ở Server!");
+                    MessageBox.Show(e.Message);
                 }
             }
             
