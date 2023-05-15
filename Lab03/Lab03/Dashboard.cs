@@ -37,7 +37,8 @@ namespace Lab03
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            var OpenForm = new Form4();
+            OpenForm.Show();
         }
     }
 }
