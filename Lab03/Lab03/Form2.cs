@@ -43,8 +43,8 @@ namespace Lab03
                 serverSocket.Listen(5);
                 
                 clientSocket = serverSocket.Accept();
-                
                 string connectInfo = "Server running on " + clientSocket.LocalEndPoint.ToString() + "\n";   
+
                 if (!IsDisposed && InvokeRequired)
                 {
                     Invoke(new Action(() => richTextBox1.AppendText(connectInfo)));
@@ -60,7 +60,7 @@ namespace Lab03
                     do
                     {
                         bytesReceived = clientSocket.Receive(recv);
-                        if (bytesReceived == 0) 
+                        if (bytesReceived == 0)
                         {
                             break;
                         }
@@ -71,7 +71,7 @@ namespace Lab03
                     //1.Tai sao lai raise ObjectDisposedException: 'Cannot access a disposed object. Object name: 'RichTextBox'.' khi thuc hien dong duoi day
                     //richTextBox1.Invoke(new MethodInvoker(delegate { richTextBox1.Text += returnData + "\n"; }));
                     //2. update in the main thread, not like create a delegate and work in current thread, it makes an action in main thread?? hoi thay coi dung ko    
-                    //3. Tai sao doan code nay no lai bi ODE tren Form2, doan code dau thi ODE tren richtextbox? lu qua
+                    //3. Tai sao doan code nay no lai bi ODE tren Form2, doan code dau thi ODE tren richtextbox? 
                         Invoke(new Action(() => richTextBox1.AppendText(returnData)));
                     }
                     else if (!IsDisposed)

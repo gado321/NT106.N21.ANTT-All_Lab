@@ -61,6 +61,7 @@
             this.Controls.Add(this.button1);
             this.Name = "Form4_ServerThread";
             this.Text = "Form4_ServerThread";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form4_ServerThread_FormClosing);
             this.ResumeLayout(false);
 
         }

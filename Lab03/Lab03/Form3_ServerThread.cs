@@ -20,9 +20,12 @@ namespace Lab03
             InitializeComponent();
         }
 
+        Thread TCPServer;
+        TcpListener TCPserver;
+
         private void button1_Click(object sender, EventArgs e)
         {
-            Thread TCPServer = new Thread(new ThreadStart(ServerThread));
+            TCPServer = new Thread(new ThreadStart(ServerThread));
             TCPServer.IsBackground = true;
             TCPServer.Start();
         }
@@ -30,7 +33,7 @@ namespace Lab03
         private void ServerThread()
         {
             IPEndPoint ipepServer = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080);
-            TcpListener TCPserver = new TcpListener(ipepServer);
+            TCPserver = new TcpListener(ipepServer);
             string connectInfo = "Server running on " + TCPserver.LocalEndpoint.ToString();
             if (!IsDisposed && InvokeRequired)
             {
@@ -75,6 +78,12 @@ namespace Lab03
             }
             
             
+        }
+
+        private void Form3_ServerThread_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TCPserver.Stop();
+            TCPServer.Abort();
         }
     }
 }
