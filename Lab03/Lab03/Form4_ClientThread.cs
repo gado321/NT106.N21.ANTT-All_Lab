@@ -27,10 +27,8 @@ namespace Lab03
         {   
             try
             {
-
-                NetworkStream networkStream = tcpClient.GetStream();
                 Byte[] data = Encoding.ASCII.GetBytes(yournameTxtBox.Text + ": " + richTextBox1.Text);
-                networkStream.Write(data, 0, data.Length);
+                tcpClient.GetStream().Write(data, 0, data.Length);
 
             }
             catch (SocketException)
@@ -46,7 +44,7 @@ namespace Lab03
                 MessageBox.Show("Đã có lỗi xảy ra ở Client!");
                 MessageBox.Show(ex.Message);
             }
-            MessageBox.Show("done");
+
         }
 
         private void Form4_ClientThread_Load(object sender, EventArgs e)
@@ -85,10 +83,6 @@ namespace Lab03
                     Byte[] receivedBytes = new byte[1024];
                     int dataSize = networkStream.Read(receivedBytes, 0, receivedBytes.Length);
                     UpdateTextBox("\n" + Encoding.ASCII.GetString(receivedBytes, 0, dataSize).ToString());
-                }
-                else
-                {
-                    Thread.Sleep(100);
                 }
             }
         }
