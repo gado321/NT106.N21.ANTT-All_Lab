@@ -88,6 +88,9 @@ namespace Lab03
         private object clientsLock = new object();
         private int n = 0;
 
+        private Thread[] threads = new Thread[100];
+        private int numOfThreads = 0;
+
         private void ServerThread()
         {
             IPEndPoint ipepServer = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080);
@@ -119,11 +122,11 @@ namespace Lab03
                     {
                         n++;
                     }
-                    MessageBox.Show(n.ToString());
 
                     Thread cli = new Thread(() => cliThread(TCPclient.GetStream()));
                     cli.Start();
-
+                    threads[numOfThreads] = cli;
+                    numOfThreads++;
 
                     
                 }
@@ -137,6 +140,10 @@ namespace Lab03
         }
         private void Form4_ServerThread_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            for (int i = 0; i < numOfThreads; i++)
+            {
+                threads[i].Abort();
+            }
             TCPserver.Stop();
             TCPServer.Abort();
         }

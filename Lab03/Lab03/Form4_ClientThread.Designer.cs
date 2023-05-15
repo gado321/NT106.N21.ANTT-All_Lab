@@ -166,6 +166,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form4_ClientThread";
             this.Text = "Form4_ClientThread";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form4_ClientThread_FormClosed);
             this.Load += new System.EventHandler(this.Form4_ClientThread_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

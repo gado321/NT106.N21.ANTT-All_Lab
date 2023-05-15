@@ -87,6 +87,7 @@ namespace Lab03
             }
         }
 
+        private Thread responseThread;
         private void btnInit_Click(object sender, EventArgs e)
         {
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(textBox1.Text), int.Parse(textBox2.Text));
@@ -95,9 +96,14 @@ namespace Lab03
 
             NetworkStream networkStream = tcpClient.GetStream();
 
-            Thread responseThread = new Thread(() => ReceiveResponses(networkStream));
+            responseThread = new Thread(() => ReceiveResponses(networkStream));
             responseThread.Start();
 
+        }
+
+        private void Form4_ClientThread_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            responseThread.Abort();
         }
     }
 }
