@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Lab04
             }
             catch 
             {
-                MessageBox.Show("Vui long nhap dung URL");
+                MessageBox.Show("Enter a valid URL");
             }
         }
 
@@ -47,68 +48,83 @@ namespace Lab04
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            // Lấy nội dung HTML của Control WebBrowser
-            string htmlCode = webBrowser1.DocumentText;
-
-            // Parse HTML để lấy danh sách các đường dẫn đến các file đínhkèm
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(htmlCode);
-
             // Tạo một thư mục để lưu trữ các file được tải xuống
-            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WebSource");
+            string folderPath = Path.Combine(Directory.GetDirectoryRoot("D:/").ToString(), "downloaded_files");
             Directory.CreateDirectory(folderPath);
 
-            // Tải xuống các hình ảnh và các file liên quan
-            foreach (HtmlNode imgNode in doc.DocumentNode.Descendants("img"))
+            using (WebClient client = new WebClient())
             {
-                string imgUrl = imgNode.GetAttributeValue("src", "");
-                if (!string.IsNullOrEmpty(imgUrl))
-                {
-                    // Xoá Token
-                    imgUrl = Regex.Replace(imgUrl, @"\?.*", "");
-                    try
-                    {
-                        // Tạo tên file từ đường dẫn url của hình ảnh
-                        string fileName = Path.GetFileName(imgUrl);
+                
 
-                        // Tải xuống hình ảnh
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(imgUrl, Path.Combine(folderPath, fileName));
-                        }
-                    }
-                    catch (Exception ex)
+                string html = webBrowser1.DocumentText;
+
+                Stream response = client.OpenRead(textBox1.Text);
+                string htmlfilepath = Regex.Replace(webBrowser1.Url.ToString(), "^(http:\\/\\/www.|https:\\/\\/www.)", string.Empty);
+                client.DownloadFile(textBox1.Text, Path.Combine("D:/downloaded_files", htmlfilepath.Replace("/", "_") + ".html"));
+
+                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+                doc.LoadHtml(html);
+
+                var fileNodes = doc.DocumentNode.SelectNodes("//img | //link | //script | //a");
+
+                if (fileNodes != null)
+                {
+                    string downloadFolder = Path.Combine("D:/downloaded_files", Regex.Replace(webBrowser1.Url.ToString(), "^(http:\\/\\/|https:\\/\\/)", string.Empty));
+                    Directory.CreateDirectory(downloadFolder);
+
+                    foreach (var fileNode in fileNodes)
                     {
-                        // Xử lý lỗi nếu có
-                        //MessageBox.Show(ex.Message);
+                        string fileUrl = null;
+
+                        if (fileNode.Name == "img" || fileNode.Name == "script")
+                        {
+                            fileUrl = fileNode.GetAttributeValue("src", null);
+                        }
+                        else if (fileNode.Name == "link")
+                        {
+                            string rel = fileNode.GetAttributeValue("rel", "").ToLower();
+                            if (rel == "shortcut icon" || rel == "icon" || rel == "preload" || rel == "stylesheet")
+                            {
+                                fileUrl = fileNode.GetAttributeValue("href", null);
+                            }
+                        }
+                        else if (fileNode.Name == "a")
+                        {
+                            // Download only specific file types, e.g., PDF documents
+                            fileUrl = fileNode.GetAttributeValue("href", null);
+
+                            if (!fileUrl.ToLower().EndsWith(".pdf"))
+                            {
+                                fileUrl = null;
+                            }
+                        }
+
+                        if (fileUrl == null)
+                            continue;
+
+                        // Replace token (if any)
+                        //fileUrl = Regex.Replace(fileUrl, @"\?.*", "");
+
+                        // Resolve relative URLs
+                        Uri baseUri = new Uri(textBox1.Text);
+                        Uri resolvedUri = new Uri(baseUri, fileUrl);
+
+                        string fileName = Path.GetFileName(resolvedUri.LocalPath);
+                        string fileSavePath = Path.Combine(downloadFolder, fileName);
+
+                        try
+                        {
+                            await client.DownloadFileTaskAsync(resolvedUri, fileSavePath);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle download errors (e.g., 404 Not Found)
+                            MessageBox.Show($"Error downloading file '{resolvedUri}': {ex.Message}");
+                        }
                     }
                 }
             }
-
-            // Tải xuống các file liên quan khác
-            foreach (HtmlNode linkNode in doc.DocumentNode.SelectNodes("//a[@href]"))
-            {
-                string linkUrl = linkNode.GetAttributeValue("href", "");
-                if (!string.IsNullOrEmpty(linkUrl) && linkUrl.StartsWith("http"))
-                {
-                    try
-                    {
-                        // Tạo tên file từ đường dẫn url
-                        string fileName = Path.GetFileName(linkUrl);
-
-                        // Tải xuống file
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(linkUrl, Path.Combine(folderPath, fileName));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Xử lý lỗi nếu có
-                        //MessageBox.Show(ex.Message);
-                    }
-                }
-            }
+            MessageBox.Show("Files downloaded successfully.");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -126,6 +142,21 @@ namespace Lab04
         private void button5_Click(object sender, EventArgs e)
         {
             webBrowser1.Refresh();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.ShowDialog();
+            try
+            {
+                webBrowser1.Navigate(ofd.FileName);
+                webBrowser1.ScriptErrorsSuppressed = true;
+            }
+            catch
+            {
+                MessageBox.Show("Please choose valid HTML file!");
+            }
         }
     }
 }
