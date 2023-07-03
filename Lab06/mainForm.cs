@@ -77,7 +77,7 @@ namespace Lab06
             if (ress[0] == "Server")
             {
                 isServer = true;
-                btnReady.Enabled = btnSubmit.Enabled = autoAllGame.Enabled = autoTurn.Enabled = btnClear.Enabled = label1.Enabled = false;
+                btnReady.Enabled = btnSubmit.Enabled = btnAutoplayWholeGame.Enabled = btnAutoPlaySingleTurn.Enabled = btnClear.Enabled = label1.Enabled = false;
                 answer.BorderStyle = BorderStyle.None;
             }
             else if (ress[0] == "@@@Ingame!@@@")
@@ -121,7 +121,7 @@ namespace Lab06
                 timerCnt.Text = timeLeft.ToString();
                 if (timeLeft == 0)
                 {
-                    btnSubmit.Enabled = autoAllGame.Enabled = autoTurn.Enabled = answer.Enabled = label3.Enabled = label4.Enabled = range.Enabled = ansNumber.Enabled = false;
+                    btnSubmit.Enabled = btnAutoplayWholeGame.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = label3.Enabled = label4.Enabled = range.Enabled = ansNumber.Enabled = false;
                     send("@@@Timeup!@@@");
                 }
                 else if (isAuto && lastSubmitTime - timeLeft >= 3)
@@ -130,7 +130,7 @@ namespace Lab06
                 }
                 else if (!isAuto && lastSubmitTime - timeLeft >= 3)
                 {
-                    btnSubmit.Enabled = autoTurn.Enabled = answer.Enabled = true;
+                    btnSubmit.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = true;
                     answer.Focus();
                     answer.Select();
                 }
@@ -177,7 +177,7 @@ namespace Lab06
 
             if (!this.InvokeRequired)
             {
-                btnSubmit.Enabled = autoTurn.Enabled = answer.Enabled = false;
+                btnSubmit.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = false;
             }
 
             int index = ansList.IndexOf(val);
@@ -206,10 +206,10 @@ namespace Lab06
                 }));
             else
             {
-                btnSubmit.Enabled = autoTurn.Enabled = answer.Enabled = false;
+                btnSubmit.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = false;
                 if (isAuto)
                 {
-                    autoAllGame.Enabled = false;
+                    btnAutoplayWholeGame.Enabled = false;
                 }
                 int val = rand.Next(0, valRange + 1);
                 submit(ansList[val]);
@@ -249,47 +249,37 @@ namespace Lab06
             {
                 try
                 {
-                    bytesCount = stream.Read(receivedBytes, 0, receivedBytes.Length);
                     if ((bytesCount = stream.Read(receivedBytes, 0, receivedBytes.Length)) <= 0) break;
                 }
-                catch
-                {
-                    break;
-                }
+                catch { break; }
                 string respondFromServer = Encoding.UTF8.GetString(receivedBytes, 0, bytesCount);
-                var dataList = respondFromServer.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (string data in dataList)
+                var dataList = respondFromServer.Split(new String[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (String data in dataList)
                 {
                     if (data[0] == 'm')
-                    {
                         conversation.Invoke(new MethodInvoker(delegate ()
                         {
                             conversation.AppendText($"{data.Substring(1)}\n");
                             conversation.ScrollToCaret();
                         }));
-                    }
                     else if (data[0] == '\t')
-                    {
                         this.Invoke(new MethodInvoker(delegate ()
                         {
                             playerNum.Text = $"{data.Substring(1)} người chơi đã tham gia";
                         }));
-                    }
+
                     else if (data.StartsWith("@@@Nextround!@@@"))
                     {
-                        if (!isIngame)
-                        {
-                            isIngame = true;
-                        }
+                        if (!isIngame) isIngame = true;
 
                         this.Invoke(new MethodInvoker(delegate ()
                         {
                             label3.Enabled = range.Enabled = true;
                         }));
 
-                        var rand = data.Substring(16).Split(new string[] { "\t" }, StringSplitOptions.RemoveEmptyEntries);
-                        startRange = int.Parse(rand[1]);
-                        endRange = int.Parse(rand[2]);
+                        var rand = data.Substring(16).Split(new String[] { "\t" }, StringSplitOptions.RemoveEmptyEntries);
+                        startRange = Int32.Parse(rand[1]);
+                        endRange = Int32.Parse(rand[2]);
                         valRange = endRange - startRange;
                         ansList = Enumerable.Range(startRange, valRange + 1).ToList();
                         range.Invoke(new MethodInvoker(delegate ()
@@ -297,23 +287,20 @@ namespace Lab06
                             range.Text = $"[{startRange}, {endRange}]";
                         }));
 
-                        if (isServer)
+                        if (isServer) ansNumber.Invoke(new MethodInvoker(delegate ()
                         {
-                            ansNumber.Invoke(new MethodInvoker(delegate ()
+                            this.Invoke(new MethodInvoker(delegate ()
                             {
-                                this.Invoke(new MethodInvoker(delegate ()
-                                {
-                                    label4.Enabled = ansNumber.Enabled = true;
-                                }));
-                                ansNumber.Text = rand[3];
+                                label4.Enabled = ansNumber.Enabled = true;
                             }));
-                        }
+                            ansNumber.Text = rand[3];
+                        }));
                         else
                         {
                             lastSubmitTime = 100;
                             this.Invoke(new MethodInvoker(delegate ()
                             {
-                                btnSubmit.Enabled = autoAllGame.Enabled = autoTurn.Enabled = answer.Enabled = true;
+                                btnSubmit.Enabled = btnAutoplayWholeGame.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = true;
                                 answer.Focus();
                                 answer.Select();
                             }));
@@ -331,7 +318,7 @@ namespace Lab06
                         this.Invoke(new MethodInvoker(delegate ()
                         {
                             btnReady.Enabled = true;
-                            btnSubmit.Enabled = autoAllGame.Enabled = autoTurn.Enabled = answer.Enabled = false;
+                            btnSubmit.Enabled = btnAutoplayWholeGame.Enabled = btnAutoPlaySingleTurn.Enabled = answer.Enabled = false;
                         }));
                         isIngame = isAuto = false;
                     }

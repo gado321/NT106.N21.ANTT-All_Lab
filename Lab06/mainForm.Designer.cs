@@ -39,8 +39,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.playerNum = new System.Windows.Forms.Label();
-            this.autoTurn = new System.Windows.Forms.Button();
-            this.autoAllGame = new System.Windows.Forms.Button();
+            this.btnAutoPlaySingleTurn = new System.Windows.Forms.Button();
+            this.btnAutoplayWholeGame = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.range = new System.Windows.Forms.Label();
@@ -55,10 +55,10 @@
             this.btnSend.FlatAppearance.BorderSize = 0;
             this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSend.ForeColor = System.Drawing.Color.Black;
-            this.btnSend.Location = new System.Drawing.Point(851, 284);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSend.Location = new System.Drawing.Point(1276, 444);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(165, 60);
+            this.btnSend.Size = new System.Drawing.Size(248, 94);
             this.btnSend.TabIndex = 1;
             this.btnSend.TabStop = false;
             this.btnSend.Text = "Send";
@@ -71,10 +71,10 @@
             this.btnClear.FlatAppearance.BorderSize = 0;
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.Black;
-            this.btnClear.Location = new System.Drawing.Point(851, 359);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClear.Location = new System.Drawing.Point(1276, 561);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(165, 60);
+            this.btnClear.Size = new System.Drawing.Size(248, 94);
             this.btnClear.TabIndex = 1;
             this.btnClear.TabStop = false;
             this.btnClear.Text = "Clear";
@@ -86,10 +86,10 @@
             this.message.BackColor = System.Drawing.SystemColors.Control;
             this.message.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.message.ForeColor = System.Drawing.Color.Black;
-            this.message.Location = new System.Drawing.Point(177, 136);
-            this.message.Margin = new System.Windows.Forms.Padding(4);
+            this.message.Location = new System.Drawing.Point(266, 212);
+            this.message.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.message.Name = "message";
-            this.message.Size = new System.Drawing.Size(668, 34);
+            this.message.Size = new System.Drawing.Size(1000, 50);
             this.message.TabIndex = 0;
             this.message.KeyDown += new System.Windows.Forms.KeyEventHandler(this.message_KeyDown);
             // 
@@ -98,11 +98,11 @@
             this.conversation.BackColor = System.Drawing.SystemColors.Control;
             this.conversation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.conversation.ForeColor = System.Drawing.Color.Black;
-            this.conversation.Location = new System.Drawing.Point(13, 180);
-            this.conversation.Margin = new System.Windows.Forms.Padding(4);
+            this.conversation.Location = new System.Drawing.Point(20, 281);
+            this.conversation.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.conversation.Name = "conversation";
             this.conversation.ReadOnly = true;
-            this.conversation.Size = new System.Drawing.Size(832, 390);
+            this.conversation.Size = new System.Drawing.Size(1246, 607);
             this.conversation.TabIndex = 0;
             this.conversation.TabStop = false;
             this.conversation.Text = "Chờ tất cả player sẵn sàng!\n";
@@ -113,10 +113,10 @@
             this.btnReady.FlatAppearance.BorderSize = 0;
             this.btnReady.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.btnReady.ForeColor = System.Drawing.Color.Black;
-            this.btnReady.Location = new System.Drawing.Point(853, 180);
-            this.btnReady.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReady.Location = new System.Drawing.Point(1280, 281);
+            this.btnReady.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnReady.Name = "btnReady";
-            this.btnReady.Size = new System.Drawing.Size(165, 96);
+            this.btnReady.Size = new System.Drawing.Size(248, 150);
             this.btnReady.TabIndex = 0;
             this.btnReady.TabStop = false;
             this.btnReady.Text = "Ready";
@@ -129,11 +129,11 @@
             this.answer.Enabled = false;
             this.answer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.answer.ForeColor = System.Drawing.Color.Black;
-            this.answer.Location = new System.Drawing.Point(177, 36);
-            this.answer.Margin = new System.Windows.Forms.Padding(4);
+            this.answer.Location = new System.Drawing.Point(266, 56);
+            this.answer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.answer.MaxLength = 3;
             this.answer.Name = "answer";
-            this.answer.Size = new System.Drawing.Size(80, 80);
+            this.answer.Size = new System.Drawing.Size(118, 50);
             this.answer.TabIndex = 1;
             this.answer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.answer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.answer_KeyDown);
@@ -142,10 +142,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(13, 67);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(20, 105);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 29);
+            this.label1.Size = new System.Drawing.Size(245, 44);
             this.label1.TabIndex = 4;
             this.label1.Text = "Your Answer:";
             // 
@@ -153,10 +153,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(101, 139);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(152, 217);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 29);
+            this.label2.Size = new System.Drawing.Size(110, 44);
             this.label2.TabIndex = 5;
             this.label2.Text = "Chat:";
             // 
@@ -167,10 +167,10 @@
             this.btnSubmit.FlatAppearance.BorderSize = 0;
             this.btnSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSubmit.ForeColor = System.Drawing.Color.Black;
-            this.btnSubmit.Location = new System.Drawing.Point(265, 36);
-            this.btnSubmit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSubmit.Location = new System.Drawing.Point(398, 56);
+            this.btnSubmit.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(131, 80);
+            this.btnSubmit.Size = new System.Drawing.Size(196, 125);
             this.btnSubmit.TabIndex = 6;
             this.btnSubmit.TabStop = false;
             this.btnSubmit.Text = "Submit";
@@ -183,45 +183,45 @@
             this.playerNum.Dock = System.Windows.Forms.DockStyle.Top;
             this.playerNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playerNum.Location = new System.Drawing.Point(0, 0);
-            this.playerNum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.playerNum.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.playerNum.Name = "playerNum";
-            this.playerNum.Size = new System.Drawing.Size(1031, 32);
+            this.playerNum.Size = new System.Drawing.Size(1546, 50);
             this.playerNum.TabIndex = 7;
             this.playerNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // autoTurn
+            // btnAutoPlaySingleTurn
             // 
-            this.autoTurn.BackColor = System.Drawing.SystemColors.Control;
-            this.autoTurn.Enabled = false;
-            this.autoTurn.FlatAppearance.BorderSize = 0;
-            this.autoTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.autoTurn.ForeColor = System.Drawing.Color.Black;
-            this.autoTurn.Location = new System.Drawing.Point(400, 36);
-            this.autoTurn.Margin = new System.Windows.Forms.Padding(0);
-            this.autoTurn.Name = "autoTurn";
-            this.autoTurn.Size = new System.Drawing.Size(186, 80);
-            this.autoTurn.TabIndex = 9;
-            this.autoTurn.TabStop = false;
-            this.autoTurn.Text = "Autoplay a turn";
-            this.autoTurn.UseVisualStyleBackColor = false;
-            this.autoTurn.Click += new System.EventHandler(this.autoTurn_Click);
+            this.btnAutoPlaySingleTurn.BackColor = System.Drawing.SystemColors.Control;
+            this.btnAutoPlaySingleTurn.Enabled = false;
+            this.btnAutoPlaySingleTurn.FlatAppearance.BorderSize = 0;
+            this.btnAutoPlaySingleTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnAutoPlaySingleTurn.ForeColor = System.Drawing.Color.Black;
+            this.btnAutoPlaySingleTurn.Location = new System.Drawing.Point(600, 56);
+            this.btnAutoPlaySingleTurn.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAutoPlaySingleTurn.Name = "btnAutoPlaySingleTurn";
+            this.btnAutoPlaySingleTurn.Size = new System.Drawing.Size(279, 125);
+            this.btnAutoPlaySingleTurn.TabIndex = 9;
+            this.btnAutoPlaySingleTurn.TabStop = false;
+            this.btnAutoPlaySingleTurn.Text = "Autoplay a turn";
+            this.btnAutoPlaySingleTurn.UseVisualStyleBackColor = false;
+            this.btnAutoPlaySingleTurn.Click += new System.EventHandler(this.autoTurn_Click);
             // 
-            // autoAllGame
+            // btnAutoplayWholeGame
             // 
-            this.autoAllGame.BackColor = System.Drawing.SystemColors.Control;
-            this.autoAllGame.Enabled = false;
-            this.autoAllGame.FlatAppearance.BorderSize = 0;
-            this.autoAllGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.autoAllGame.ForeColor = System.Drawing.Color.Black;
-            this.autoAllGame.Location = new System.Drawing.Point(593, 36);
-            this.autoAllGame.Margin = new System.Windows.Forms.Padding(0);
-            this.autoAllGame.Name = "autoAllGame";
-            this.autoAllGame.Size = new System.Drawing.Size(252, 80);
-            this.autoAllGame.TabIndex = 10;
-            this.autoAllGame.TabStop = false;
-            this.autoAllGame.Text = "Autoplay all rounds";
-            this.autoAllGame.UseVisualStyleBackColor = false;
-            this.autoAllGame.Click += new System.EventHandler(this.autoAllGame_Click);
+            this.btnAutoplayWholeGame.BackColor = System.Drawing.SystemColors.Control;
+            this.btnAutoplayWholeGame.Enabled = false;
+            this.btnAutoplayWholeGame.FlatAppearance.BorderSize = 0;
+            this.btnAutoplayWholeGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.btnAutoplayWholeGame.ForeColor = System.Drawing.Color.Black;
+            this.btnAutoplayWholeGame.Location = new System.Drawing.Point(890, 56);
+            this.btnAutoplayWholeGame.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAutoplayWholeGame.Name = "btnAutoplayWholeGame";
+            this.btnAutoplayWholeGame.Size = new System.Drawing.Size(378, 125);
+            this.btnAutoplayWholeGame.TabIndex = 10;
+            this.btnAutoplayWholeGame.TabStop = false;
+            this.btnAutoplayWholeGame.Text = "Autoplay all rounds";
+            this.btnAutoplayWholeGame.UseVisualStyleBackColor = false;
+            this.btnAutoplayWholeGame.Click += new System.EventHandler(this.autoAllGame_Click);
             // 
             // timer
             // 
@@ -233,10 +233,10 @@
             this.label3.AutoSize = true;
             this.label3.Enabled = false;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(853, 448);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(1280, 700);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 22);
+            this.label3.Size = new System.Drawing.Size(122, 33);
             this.label3.TabIndex = 12;
             this.label3.Text = "Khoảng:";
             // 
@@ -245,10 +245,10 @@
             this.range.AutoSize = true;
             this.range.Enabled = false;
             this.range.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.range.Location = new System.Drawing.Point(926, 448);
-            this.range.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.range.Location = new System.Drawing.Point(1389, 700);
+            this.range.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.range.Name = "range";
-            this.range.Size = new System.Drawing.Size(0, 22);
+            this.range.Size = new System.Drawing.Size(0, 33);
             this.range.TabIndex = 13;
             // 
             // label4
@@ -256,10 +256,10 @@
             this.label4.AutoSize = true;
             this.label4.Enabled = false;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(856, 478);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(1284, 747);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 22);
+            this.label4.Size = new System.Drawing.Size(116, 33);
             this.label4.TabIndex = 14;
             this.label4.Text = "Đáp án:";
             // 
@@ -268,32 +268,33 @@
             this.ansNumber.AutoSize = true;
             this.ansNumber.Enabled = false;
             this.ansNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ansNumber.Location = new System.Drawing.Point(938, 478);
-            this.ansNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ansNumber.Location = new System.Drawing.Point(1407, 747);
+            this.ansNumber.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ansNumber.Name = "ansNumber";
-            this.ansNumber.Size = new System.Drawing.Size(0, 22);
+            this.ansNumber.Size = new System.Drawing.Size(0, 33);
             this.ansNumber.TabIndex = 15;
             // 
             // timerCnt
             // 
             this.timerCnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timerCnt.Location = new System.Drawing.Point(855, 42);
+            this.timerCnt.Location = new System.Drawing.Point(1282, 66);
+            this.timerCnt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.timerCnt.Name = "timerCnt";
-            this.timerCnt.Size = new System.Drawing.Size(164, 134);
+            this.timerCnt.Size = new System.Drawing.Size(246, 209);
             this.timerCnt.TabIndex = 16;
             this.timerCnt.Text = "X";
             this.timerCnt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1031, 608);
+            this.ClientSize = new System.Drawing.Size(1546, 950);
             this.Controls.Add(this.timerCnt);
-            this.Controls.Add(this.autoTurn);
+            this.Controls.Add(this.btnAutoPlaySingleTurn);
             this.Controls.Add(this.ansNumber);
-            this.Controls.Add(this.autoAllGame);
+            this.Controls.Add(this.btnAutoplayWholeGame);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.range);
             this.Controls.Add(this.label3);
@@ -309,7 +310,7 @@
             this.Controls.Add(this.btnSend);
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Player";
@@ -332,8 +333,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Label playerNum;
-        private System.Windows.Forms.Button autoTurn;
-        private System.Windows.Forms.Button autoAllGame;
+        private System.Windows.Forms.Button btnAutoPlaySingleTurn;
+        private System.Windows.Forms.Button btnAutoplayWholeGame;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label range;
