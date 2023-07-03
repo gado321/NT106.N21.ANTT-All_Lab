@@ -22,7 +22,7 @@ namespace Lab03
         private void button1_Click(object sender, EventArgs e)
         {   
             try
-            {
+            {   
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(textBox1.Text), int.Parse(textBox2.Text));
                 TcpClient tcpClient = new TcpClient();
                 tcpClient.Connect(ipep);

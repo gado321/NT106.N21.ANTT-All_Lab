@@ -76,8 +76,6 @@ namespace Lab03
 
                 }
             }
-            
-            
         }
 
         private void Form3_ServerThread_FormClosing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -41,8 +41,6 @@ namespace Lab05
             {
                 label3.Text = "Tài khoản hoặc mật khẩu không đúng!";
             }
-            
-
         }
 
         private void Form4_FormClosed(object sender, FormClosedEventArgs e)
